@@ -1,0 +1,25 @@
+Abstract class identity {
+}
+
+class number{
+	rational
+}
+class rational{
+	AsFactors()
+	AsDecimal()
+
+}
+
+Class integer{
+	AsInteger;
+}
+
+Class irrational{
+	Double approximation;
+	String name;
+}
+
+Class complex{
+	rational rationalPart;
+	rational irrationalPart;
+}
