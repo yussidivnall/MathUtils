@@ -1,0 +1,22 @@
+Generating public/private rsa key pair.
+./dummy2048bit_rsakey-12345 already exists.
+Overwrite (y/n)? y
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in ./dummy2048bit_rsakey-12345.
+Your public key has been saved in ./dummy2048bit_rsakey-12345.pub.
+The key fingerprint is:
+ad:d9:45:d1:e0:61:d0:1b:33:7d:33:73:2b:9b:2e:3c volcan@drak
+The key's randomart image is:
++--[ RSA 2048]----+
+|          .o=+   |
+|           o=oo+o|
+|            o= .*|
+|         . ... . |
+|        S . . +  |
+|         + . o   |
+|        o o .    |
+|           E .   |
+|            o    |
++-----------------+
+
