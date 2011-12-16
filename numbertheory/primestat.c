@@ -33,6 +33,8 @@ int isprime(int n){
 		if(n%firstprimes[i]==0) return 0;
 	}
 	//Then preform thermat's little test
+	//Lifted from:http://www.dreamincode.net/forums/topic/221490-determining-prime-numbers-using-fermats-little-theorem/
+
 	if ((((2^n)-2)%n)==0){
 		return 1;
 	}
