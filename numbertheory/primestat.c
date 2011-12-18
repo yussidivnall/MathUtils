@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <iostream>
 #include <iomanip>
+#include <gmpxx.h>
+#include <math.h>
 
 bool bitbucket[64];
 int bitchance[64];
@@ -29,16 +31,19 @@ int bruteisprime(int n){
 }
 int isprime(int n){
 	//First test that n%firstprimes[i]!=0
-	for(int i=0;i<10000;i++){
-		if(n%firstprimes[i]==0) return 0;
-	}
+	//for(int i=0;i<10000;i++){
+	//	if(n%firstprimes[i]==0) return 0; //Not a prime
+	//}
 	//Then preform thermat's little test
-	//Lifted from:http://www.dreamincode.net/forums/topic/221490-determining-prime-numbers-using-fermats-little-theorem/
+	//is p is prime then, given a positive integer a
+	//a^p equiv a (mod p)
+	long int pwr=pow(2,n);
+	//cout << "PWR:" <<pwr <<"\n";
 
-	if ((((2^n)-2)%n)==0){
+	if ( (pwr-2) % n == 0){
 		return 1;
 	}
-	return 0;
+	return 0; //We suspect this isn't a prime...
 }
 
 void populatefirstprimes(){
@@ -67,24 +72,14 @@ void init(){
 
 int main(int argc,char ** argv){
 	init();
-	for(int i=2;i<=1000000;i++){
-		if(isprime(i))cout << i << " is a prime \n";
+	//isprime(9);
+	
+	for(int i=2;i<=100;i++){
+		if(isprime(i)){
+			cout << i << " is a prime \n";
+		}
 		else cout << i << " is not a prime \n";
 	}
-	//dumpfirstprimes();
-	/*
-	int somenumber=23;
-	if(bruteisprime(somenumber)) cout << somenumber << " is prime \n";
-	else cout << somenumber << " isn't a prime \n";
-	bool *abit;
-	for (int i=sizeof(int)*4; i >=0;i--){
-		int bit= ((somenumber >> i)& 1);
-		
-		cout << i << " " << bit <<"\n";
-		//cout << bit;
-	}
-	*/
 	cout << "\n";
-	//memcpy(abit,somenumber[2],1);
 	return 0;
 }
