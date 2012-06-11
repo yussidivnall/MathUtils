@@ -13,6 +13,14 @@ public class Set{
 	int SETTYPE_WORDS=8;
 	public int type_flags=0;
 
+	final int TYPE_UNSPECIFIED=-1;
+	final int TYPE_INTEGER=0;
+	final int TYPE_RATIONAL=2;
+	final int TYPE_REAL=4;
+	final int TYPE_COMPLEX=8;
+	final int TYPE_SYMBOLIC=16;
+	public int type=TYPE_UNSPECIFIED;
+
 	AbstractSet set;
 	Vector vec;
 	String description; // Human redable description such as "x in setZ^+ ; x is prime "
@@ -25,12 +33,14 @@ public class Set{
 
 	//Initilize as a set of integers
 	public Set(int setZ[]){
-		type_flags=SETTYPE_INTS;	
+		type_flags=TYPE_INTEGER
 		for (int i=0;i <= setZ.length;i++){
 			MembersOfSetZ.add(setZ[i]);
 		}
 	}
-	public Set(){}
+	public Set(int set_type){
+		type=set_type
+	}
 	public void Add(int element){
 		
 		type_flags=(type_flags | SETTYPE_INTS);
@@ -62,7 +72,7 @@ public class Set{
 				}
 			}
 		}
-
+		//TODO Other sets 
 		return ret;
 	}
 	public Set Union(Set B){
@@ -79,14 +89,12 @@ public class Set{
 		for (Double bq:B.MembersOfSetQ){
 			ret.Add(bq);
 		}
+		//TODO Other Sets
 		return ret;
-	}	
-	public Set unionise(Set b){
-		return null;
 	}
-	public Set unionise(Set sets[]){
-		return null;
-	}
+	public void SetCycle(Set cycle){}
+
+	//TODO ALL OF THIS	
 	public boolean is_subset(Set b){ return false;}
 	public boolean is_proper_subset(Set b){return false;}
 	public void setDescription(String desc){
