@@ -1,10 +1,18 @@
 public class example{
 
 	public static void main(String args[]){
-		double a[][]={{1,9,4,},{3,12,2},{9,0,2}};
+		double a[][]={{1,2,3},{4,5,6},{7,8,9}};
+		//double a[][]={{1,1,2},{2,12,2},{3,0,2}};
 		Matrix A=new Matrix(a);
-		Matrix rrefA=A.rref(A);
-		rrefA.print();
+		A.print();
+		System.out.println("====");
+		//A.make_leading_ones().print();
+		A.rref().print();
+
+//		System.out.println("rref");
+//		A.print();
+//		System.out.println("=");
+//		rrefA.print();
 
 		/*
 		double population_size[][]={{3.75},{16.31}};

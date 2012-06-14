@@ -59,6 +59,9 @@ public class Matrix{
 		}
 		return ret;
 	}
+
+
+	
 	public Matrix subtract_row(Matrix row,int row_index){
 		//Subtract row from matrix at row_index
 		if(row.get_height()!=1){
@@ -189,30 +192,74 @@ public class Matrix{
 		if(get_width()!=get_height())return 1;
 		else return 0;
 	}
-	public Matrix rref(Matrix m){ // This should prob. be done on this, not param m
-		Matrix ret=m;
-		Matrix row_1=m.get_row(1);
-		if (m.get_entry(1,1)!=1){return null;} // Just for now...
 
-			//row working on...
-			for (int i=1;i<=m.get_height();i++){
-			Matrix row_i=m.get_row(i);
-			//row to check against...
-			for (int j=1;j<=m.get_height();j++){
-				Matrix row_j=m.get_row(j);
-				//find leading non_zero
-				int leading_non_zero=0;
-				for (int k=1;k<=m.get_width();k++){
-					if (k!=0) {leading_non_zero=k; break; }
+
+
+
+
+	// adds a multiple of src_row to dest_row (For simple row operations)
+	public Matrix add_row(double multiple,int src_row,int dest_row){
+		Matrix ret =this;
+		Matrix src_matrix=this.get_row(src_row);
+		for (int i=1; i<= ret.get_width();i++){
+			ret.set_entry(dest_row,i, 
+				ret.get_entry(dest_row,i)+ multiple*ret.get_entry(src_row,i));
+		}
+		return ret;	
+		
+	}
+
+	//Takes a row and returns the column number of the first non-zero
+	public int pivot_column(int row){
+		Matrix r = this.get_row(row);
+		for (int i=1; i <=get_width();i++){
+			if(r.get_entry(1,i)!=0)return i;	
+		}
+		return -1;
+	}
+	
+	//find pivot, and multiply all other elements by 1/pivot
+	public Matrix make_leading_ones(){
+		Matrix ret=this;
+		for(int r=1;r<=ret.get_height();r++){ //Iterate over rows
+			int pivot_index=ret.pivot_column(r);
+			if(pivot_index==-1) continue;
+			double multiple=1.0/(ret.get_entry(r,pivot_index));
+			for (int c=pivot_index;c<=ret.get_width();c++){// Iteratre over columns starting with pivot
+				double new_value=ret.get_entry(r,c) * multiple;
+				ret.set_entry(r,c,new_value);
+			}
 			
-				}
-					
-		
+		}
+		return ret;
+	}
+	public Matrix rref(){
+		Matrix ret=this;
+		for (int src_row=1;src_row<=ret.get_height();src_row++){
+			ret=ret.make_leading_ones();//Make row with a leading one after each iteration
+			int src_pivot_index=ret.pivot_column(src_row);
+			if (src_pivot_index==-1)continue;
+			for(int dst_row=1;dst_row<=ret.get_height(); dst_row++){
+				if (src_row==dst_row) continue; // Skip current row
+				//This is a source of confusing, i am trying to eliminate source pivot in destination?
+				//Not all that clear, basically the question is, where do i stop!
+				double old_value=ret.get_entry(dst_row,src_pivot_index);
+				if(old_value==0.0) continue;
+				ret=ret.add_row(-old_value,src_row,dst_row);
 			}
-			}
-		
+		}
+		/*
+		for(int i=1;i<=get_height();i++){
+			int pivot_index=pivot_column(i);
+			if(pivot_index==-1)continue;
+			double pivot_value=get_entry(i,pivot_index);
+			dbg("Pivot at "+pivot_index+" value is: "+pivot_value);	
+		}*/
 		return ret;
 	}
 
+	public static void dbg(String s){
+		System.out.println(s);
+	}
 }
 
