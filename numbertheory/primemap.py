@@ -38,26 +38,22 @@ def translate_coords(x,y):
     return (x+(w/2),y+(h/2))
 
 #
-# 
+# find all prime factors of n by recursive calls to self
 #
 def prime_factors(n):
     ret=[]
-    for i in range(2,n):
+    for i in range(2,n): #Find the first factor
 
         if (float(n)/float(i) == n/i): #whole divisor
             if(is_prime_brute(i)):ret.append(i) #i is prime
             else: 
                 for f in prime_factors(i):
                     ret.append(f)
-                #ret.append(prime_factors(i))
-
-            
             if(is_prime_brute(n/i)):ret.append(n/i) #n/i is prime
             else: 
-                #ret.append(prime_factors(n/i))
                 for f in prime_factors(n/i):
                     ret.append(f)
-            break; #Should stop after first factor
+            break; #Should stop after first factor was found
     return ret;
 
              
