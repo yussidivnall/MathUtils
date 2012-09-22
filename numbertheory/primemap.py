@@ -1,5 +1,7 @@
 #!/usr/bin/python
-
+#Prints all numbers upto "last" which only have 2 prime factors
+#Draws a chart, in which x,y are the prime factors
+#
 import sys
 #import and init pygame
 import pygame # imports stuff you need to draw shapes etc
@@ -10,9 +12,9 @@ pygame.init()
 
 width=800
 height=800
-last=100000
-update=True
-output_image="NumbersWith2PrimeFactors.png"
+last=100000 #last number to check
+update=True #Update display (Will slow it down for large "last"
+output_image="NumbersWith2PrimeFactors.png" #Image file name
 
 window = pygame.display.set_mode((width, height))
 #
@@ -25,15 +27,10 @@ def is_prime_brute(p):
     if (p < 2): return False;
     if (float(p)/float(2) == p/2):
         return False; # Even number
-
-    #print "Testing now";
-    max=int(math.sqrt(p))+1
+    max=int(math.sqrt(p))+1 #Plus one to compensate for rounding down
     for i in range(3,max,2):
-        if( float(p)/float(i) == p/i):
-            #print ("{0} is not a prime and i have {1} to prove is".format(p,i))
+        if( float(p)/float(i) == p/i): #Found factors, not a prime
             return False
-     #print(i);
-
     return True;
 
 #
@@ -64,20 +61,28 @@ def prime_factors(n):
     return ret;
 
              
-
+#
+# Iterates over numbers from 0 to "last", 
+# checks if these are made of 2 prime factors
+# plot a point (Got to be a better way to do a pixel in pygame than a circle with radius 1)
+# Output to terminal in a CSV format
+# Update display if "update==true"
+#
+#@TODO figure out how to scale colours properly
+#
 def iterate_numbers():
     global window
     global last
     global update
 
+    one_unit_colour=float (int(0xffffff)/last ) #Last colour / number of composites
     for i in range(0,last):
         if (not is_prime_brute(i)):
             factors=prime_factors(i)
             if (len(factors)==2):
-                print i
-                print factors
-                print "-------------------"
-                pygame.draw.circle(window,i,(factors[0],factors[1]),1)
+                print "{0} ; {1} ; {2}".format(i,factors[0],factors[1])
+                colour=i
+                pygame.draw.circle(window,colour,(factors[0],factors[1]),1)
                 if(update): pygame.display.flip()
             
 
