@@ -7,7 +7,14 @@ import time;  # imports stuff for stop-timer
 import random;# imports stuff to make random numbers
 import math
 pygame.init()
-window = pygame.display.set_mode((10000, 10000))
+
+width=800
+height=800
+last=100000
+update=True
+output_image="NumbersWith2PrimeFactors.png"
+
+window = pygame.display.set_mode((width, height))
 #
 #   The simplest primality test 
 #   (will fail if you call: is_prime_brute(3.0)
@@ -60,7 +67,10 @@ def prime_factors(n):
 
 def iterate_numbers():
     global window
-    for i in range(0,500000):
+    global last
+    global update
+
+    for i in range(0,last):
         if (not is_prime_brute(i)):
             factors=prime_factors(i)
             if (len(factors)==2):
@@ -68,15 +78,15 @@ def iterate_numbers():
                 print factors
                 print "-------------------"
                 pygame.draw.circle(window,i,(factors[0],factors[1]),1)
-                #pygame.display.flip()
+                if(update): pygame.display.flip()
             
 
 def main():
     global window
-    print("Hi");
+    global output_image
     iterate_numbers();
     #pygame.draw.circle(window,0xff0000,translate_coords(0,0),20);
     pygame.display.flip();
-    pygame.image.save(window,"composites_with_2_prime_factors.png")
+    pygame.image.save(window,output_image)
 if __name__=='__main__': main()
 time.sleep(1)
